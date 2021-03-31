@@ -14,17 +14,16 @@ var getStudentScores;
 
 let studentTotal=0;
 let setIndex = 0;
-//var parentElement;
 let timeLeft = 30;
 let timePenalty = 0;
-let timeInterval;
+//let timeInterval;
 let stopTimer = false;
 let waitTime;
 
 var questionSet = {
-    question: ['Commonly used DataTypes DO NOT include', 'The condition in an IF/Else statement is enclosed within _____'],
-    answers: ['strings boolean alerts numbers', 'quotes curly-brackets parenthesis square-brackets'],
-    incorrect:['alerts', 'parenthesis']
+    question: ['Commonly used DataTypes DO NOT include', 'The condition in an IF/Else statement is enclosed within _____', 'Arrays in Javascript can be used to store ____', 'A very useful tool used during development and debugging for printing content to the debugger is ____', 'String values must be enclosed within ____ when being assigned to variables'],
+    answers: ['strings-boolean-alerts-numbers', 'quotes-curly brackets-square brackets-parenthesis', 'commas-other arrays-booleans-all of the above','javascript-terminal/bash-for loops-console log','commas-curly brackets-quotes-parenthesis'],
+    correctAnswer:['alerts', 'parenthesis', 'all of the above', 'console log','curly brackets']
 };
 
 let studentScores = {
@@ -45,17 +44,16 @@ function goBack(event) {
 
   clearQuestions ()
   $("#quiz-list").trigger("reset");
- // clearInterval(timeInterval);
- // clearTimeout(waitTime);
   initialiseQuestions();
 }
 
 function setTime() {
-  console.log('setTime' + timeLeft);
-  let timerResult;
+  console.log('setTime' + timeLeft + stopTimer);
+  let timerResult, timeInterval;
 
   timeInterval = setInterval(function () {
   timeLeft = timeLeft + timePenalty;
+  console.log('set Time ' + timeLeft);
 
   if (timeLeft < 0) {
     timeLeft = 0;
@@ -65,11 +63,10 @@ function setTime() {
   timerResult.lastElementChild.textContent = timeLeft;
       
   timePenalty = 0;
-
-  if (timeLeft <= 0 || stopTimer) {
+     
+  if (timeLeft === 0 || stopTimer) {
     clearInterval(timeInterval);
-   
-    finalScores();
+    finalScores ();
   }
   timeLeft--;
   }, 1000);
@@ -136,8 +133,6 @@ function getHighScores(event) {
 function saveUserScores(event){
   console.log('saveUserDetails');
   event.stopPropagation();
-  //parent = document.querySelector('.initials');
-  //console.log(parent);
 
   studentScores.initials =document.querySelector('.initials').value;
   studentScores.score  = studentTotal;
@@ -169,7 +164,7 @@ function checkAnswers(event) {
   let answerText, questionChk, waitTime;
   
   questionChk     = event.target.innerText;
-  answerTextArray = questionSet.incorrect[setIndex].split(" ");
+  answerTextArray = questionSet.correctAnswer[setIndex].split("-");
 
   answerText = "Wrong!";
   timePenalty = -10;
@@ -181,24 +176,22 @@ function checkAnswers(event) {
       timePenalty = 0;
     }
   }
-  console.log ('answer ' + answerText);
   pItem = $('<p>').text(answerText);
   quizListQuestions.append(pItem);
 
-  waitTime = setTimeout(askQuestions, 1000, event);
-  
+  waitTime = setTimeout(askQuestions, 500, event);
 }
 
 
 function askQuestions(event) {
-  console.log('askQuestions'  + event + 'Index ' + setIndex);
+  console.log('askQuestions'  + 'Index ' + setIndex);
   event.stopPropagation();
   
   if (event != null) {
-    console.log('ask questions event is null or undefined');
+  //  console.log('ask questions event is null or undefined');
     
     if (event.currentTarget.className === 'btn-start') {
-     console.log('ask Questions hereA');
+  //  console.log('ask Questions hereA');
      event.preventDefault();
      
      clearQuestions();
@@ -206,24 +199,18 @@ function askQuestions(event) {
     }
     else{
       setIndex = setIndex + 1;
-      console.log('ask Questions hereB1');
+  //    console.log('ask Questions hereB1');
       clearQuestions();
     }
   }
- // else {
- //   setIndex = setIndex +1;
-  //  console.log('ask Questions hereC2');
- //   clearQuestions();
- //
-//
-//}
- // console.log('displaying Questions');
+
+
   if (setIndex < questionSet.question.length) {
     var newQuestionItem = $('<ul>');
     newQuestionItem.text(questionSet.question[setIndex]);
     newQuestionItem.appendTo(quizListQuestions);
   
-    answerTextArray = questionSet.answers[setIndex].split(" ");
+    answerTextArray = questionSet.answers[setIndex].split("-");
     for (let i=0; i < answerTextArray.length; i++) {
       var newAnswerText = $('<li button class="btn-select align-left p-2 bg-light text-dark" style="list-style:decimal; margin:15px">');
       newAnswerText.text(answerTextArray[i]);
