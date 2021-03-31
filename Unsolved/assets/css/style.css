@@ -1,0 +1,58 @@
+main {
+  margin: 3rem auto;
+  max-width: 90vw;
+  width: 80ch;
+}
+
+ul {
+  margin: 3rem auto;
+  font-size: 1.75rem;
+}
+
+ul li {
+  margin: 1.2rem 0;
+}
+
+nav {
+  display:flex;
+  flex-flow:row wrap;
+  justify-content: space-between; 
+  
+}
+/*
+#time-result {
+  display:flex;
+  flex-flow:column wrap;
+}
+#time-result p{
+  display:inline-block;
+  flex-grow: 1 1 auto;
+  margin:10px;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  align-self: flex-end;
+}*/
+
+h4 {
+  display:inline-block;
+  margin:10px;
+}
+#time-result p{
+  display:inline-block;
+  margin:10px;
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+/*
+#user-scores {
+  display:flex;
+  flex-flow:row wrap;
+}
+#user-scores p {
+  display:inline-flex;
+  flex-grow: 1 1 auto;
+  margin:10px;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  align-self: flex-start;
+}*/
