@@ -1,26 +1,26 @@
                        
-var quizListQuestions = $('#quiz-list');
-var userScores = $('#user-scores');                   ;
-var timeResult = $('#time-result');
+let quizListQuestions = $('#quiz-list');
+let userScores = $('#user-scores');                   ;
+let timeResult = $('#time-result');
 
-var startQuiz = '.btn-start';
-var answerBtn = '.btn-select';
-var submitBtn = '.btn-initials';
-var clearBtn = '.btn-clear';
-var goBackBtn = '.btn-goBack';
-var viewScoresBtn = '.btn-viewScores';
+let startQuiz = '.btn-start';
+let answerBtn = '.btn-select';
+let submitBtn = '.btn-initials';
 
-var getStudentScores;
+let clearBtn = '.btn-clean';
+let goBackBtn = '.btn-goBack';
+let viewScoresBtn = '.btn-viewScores';
+
+let getStudentScores;
 
 let studentTotal=0;
 let setIndex = 0;
 let timeLeft = 30;
 let timePenalty = 0;
-//let timeInterval;
 let stopTimer = false;
 let waitTime;
 
-var questionSet = {
+let questionSet = {
     question: ['Commonly used DataTypes DO NOT include', 'The condition in an IF/Else statement is enclosed within _____', 'Arrays in Javascript can be used to store ____', 'A very useful tool used during development and debugging for printing content to the debugger is ____', 'String values must be enclosed within ____ when being assigned to variables'],
     answers: ['strings-boolean-alerts-numbers', 'quotes-curly brackets-square brackets-parenthesis', 'commas-other arrays-booleans-all of the above','javascript-terminal/bash-for loops-console log','commas-curly brackets-quotes-parenthesis'],
     correctAnswer:['alerts', 'parenthesis', 'all of the above', 'console log','curly brackets']
@@ -64,26 +64,14 @@ function setTime() {
       
   timePenalty = 0;
      
-  if (timeLeft === 0 || stopTimer) {
+  if (timeLeft <= 0 || stopTimer) {
     clearInterval(timeInterval);
+    clearTimeout(waitTime);
+    stopTimer = true;
     finalScores ();
   }
   timeLeft--;
   }, 1000);
-}
-
-function clearButton(event) {
-  console.log('clearing Button');
-  let clearScore;
-
-  event.stopPropagation();
-
-  clearScore  = document.querySelector('.show-scores');
-
-  if (clearScore !== null) {
-    $('.show-scores').remove(); 
-    localStorage.removeItem("studentScores");
-  }
 }
 
 function finalScores() {
@@ -115,10 +103,22 @@ function viewScores(event){
       liItem = $('<li class="view-scores" style="margin-left:65px">').text(getStudentScores.initials + ' ' + getStudentScores.score);
       userScores.append(ulItem, liItem);
     }
-  } 
-  else {
+  } else {
    $('.view-scores').remove();    
+ }
+}
+
+function clearButton(event) {
+  console.log('clearing Button');
+  let clearScore;
+
+  clearScore  = document.querySelector('.show-scores');
+  console.log(clearScore);
+  if (clearScore !== null) {
+    $('.show-scores').remove(); 
+    localStorage.removeItem("studentScores");
   }
+  console.log('at end of clearing');
 }
 
 function getHighScores(event) {
@@ -145,17 +145,16 @@ function saveUserScores(event){
 
   ulItem = $('<ul class="show-scores" style="margin-left:55px">').text('High Scores');
   liItem = $('<li class="show-scores" style="margin-left:65px">').text(getStudentScores.initials + ' ' + getStudentScores.score);
-  buttonItem1 = $('<button class="btn-clear" style="margin:15px">Clear</button>');
-  buttonItem2 = $('<button class="btn-goBack" style="margin:15px;">Go Back</button>');
+  
+  buttonItem1 = $('<button class="btn-clean" style="margin:15px">Clear</button>');
+  buttonItem2 = $('<button class="btn-goBack" style="margin:40px;">Go Back</button>');
 
   quizListQuestions.append(ulItem, liItem, buttonItem1, buttonItem2);
 
 }
 
 function clearQuestions () {
-  
   $('#quiz-list').empty();
-
 }
 
 function checkAnswers(event) {
@@ -182,42 +181,41 @@ function checkAnswers(event) {
   waitTime = setTimeout(askQuestions, 500, event);
 }
 
-
 function askQuestions(event) {
-  console.log('askQuestions'  + 'Index ' + setIndex);
-  event.stopPropagation();
+  console.log('askQuestions'  + 'stopTimer ' + stopTimer);
   
-  if (event != null) {
-  //  console.log('ask questions event is null or undefined');
+  
+  if (!stopTimer){
+    if (event != null) {
+      console.log('ask questions event is null or undefined');
     
-    if (event.currentTarget.className === 'btn-start') {
-  //  console.log('ask Questions hereA');
-     event.preventDefault();
-     
-     clearQuestions();
-     setTime();
+      if (event.currentTarget.className === 'btn-start') {
+       event.stopPropagation();
+      console.log('ask Questions hereA');
+       event.preventDefault();
+       clearQuestions();
+       setTime();
+      }
+      else{
+        setIndex = setIndex + 1;
+        console.log('ask Questions hereB1');
+        clearQuestions();
+      }
     }
-    else{
-      setIndex = setIndex + 1;
-  //    console.log('ask Questions hereB1');
-      clearQuestions();
-    }
-  }
 
-
-  if (setIndex < questionSet.question.length) {
-    var newQuestionItem = $('<ul>');
-    newQuestionItem.text(questionSet.question[setIndex]);
-    newQuestionItem.appendTo(quizListQuestions);
+    if (setIndex < questionSet.question.length) {
+      var newQuestionItem = $('<ul>');
+      newQuestionItem.text(questionSet.question[setIndex]);
+      newQuestionItem.appendTo(quizListQuestions);
   
-    answerTextArray = questionSet.answers[setIndex].split("-");
-    for (let i=0; i < answerTextArray.length; i++) {
-      var newAnswerText = $('<li button class="btn-select align-left p-2 bg-light text-dark" style="list-style:decimal; margin:15px">');
-      newAnswerText.text(answerTextArray[i]);
-      newAnswerText.appendTo(quizListQuestions);
+      answerTextArray = questionSet.answers[setIndex].split("-");
+      for (let i=0; i < answerTextArray.length; i++) {
+        var newAnswerText = $('<li button class="btn-select align-left p-2 bg-light text-dark" style="list-style:decimal; margin:15px">');
+        newAnswerText.text(answerTextArray[i]);
+        newAnswerText.appendTo(quizListQuestions);
+      
+      }
     }
-  } else {
-    stopTimer = true;
   }   
 }
 
