@@ -17,8 +17,9 @@ let studentTotal=0;
 let setIndex = 0;
 let timeLeft = 30;
 let timePenalty = 0;
-let stopTimer = false;
 let waitTime;
+
+let stopTimer = false;
 
 let questionSet = {
     question: ['Commonly used DataTypes DO NOT include', 'The condition in an IF/Else statement is enclosed within _____', 'Arrays in Javascript can be used to store ____', 'A very useful tool used during development and debugging for printing content to the debugger is ____', 'String values must be enclosed within ____ when being assigned to variables'],
@@ -65,8 +66,10 @@ function setTime() {
   timePenalty = 0;
      
   if (timeLeft <= 0 || stopTimer) {
-    clearInterval(timeInterval);
+    console.log('waitTime' + waitTime + 'interval' + timeInterval );
     clearTimeout(waitTime);
+    clearInterval(timeInterval);
+    
     stopTimer = true;
     finalScores ();
   }
@@ -160,7 +163,7 @@ function clearQuestions () {
 function checkAnswers(event) {
   console.log('checkAnswers ' + timeLeft);
   event.stopPropagation();
-  let answerText, questionChk, waitTime;
+  let answerText, questionChk;
   
   questionChk     = event.target.innerText;
   answerTextArray = questionSet.correctAnswer[setIndex].split("-");
@@ -182,42 +185,43 @@ function checkAnswers(event) {
 }
 
 function askQuestions(event) {
-  console.log('askQuestions'  + 'stopTimer ' + stopTimer);
+  console.log('askQuestions'  + 'stopTimer ' + stopTimer + 'index' + setIndex);
   
+  if (event != null) {
+    console.log('ask questions event is null or undefined');
   
-  if (!stopTimer){
-    if (event != null) {
-      console.log('ask questions event is null or undefined');
-    
-      if (event.currentTarget.className === 'btn-start') {
-       event.stopPropagation();
+    if (event.currentTarget.className === 'btn-start') {
+      event.stopPropagation();
       console.log('ask Questions hereA');
-       event.preventDefault();
-       clearQuestions();
-       setTime();
-      }
-      else{
-        setIndex = setIndex + 1;
-        console.log('ask Questions hereB1');
-        clearQuestions();
-      }
+      event.preventDefault();
+      clearQuestions();
+      setTime();
     }
+    else{
+      setIndex = setIndex + 1;
+      console.log('ask Questions hereB1');
+      clearQuestions();
+    }
+  }
 
-    if (setIndex < questionSet.question.length) {
-      var newQuestionItem = $('<ul>');
-      newQuestionItem.text(questionSet.question[setIndex]);
-      newQuestionItem.appendTo(quizListQuestions);
+  if (setIndex < questionSet.question.length) {
+    let newQuestionItem = $('<ul>');
+    let newAnswerText;
+
+    newQuestionItem.text(questionSet.question[setIndex]);
+    newQuestionItem.appendTo(quizListQuestions);
   
-      answerTextArray = questionSet.answers[setIndex].split("-");
-      for (let i=0; i < answerTextArray.length; i++) {
-        var newAnswerText = $('<li button class="btn-select align-left p-2 bg-light text-dark" style="list-style:decimal; margin:15px">');
-        newAnswerText.text(answerTextArray[i]);
-        newAnswerText.appendTo(quizListQuestions);
-      
-      }
+    answerTextArray = questionSet.answers[setIndex].split("-");
+    for (let i=0; i < answerTextArray.length; i++) {
+      newAnswerText = $('<li button class="btn-select align-left p-2 bg-light text-dark" style="list-style:decimal; margin:15px">');
+      newAnswerText.text(answerTextArray[i]);
+      newAnswerText.appendTo(quizListQuestions);
     }
-  }   
-}
+  }
+  else {
+    stopTimer =true;
+  }
+}   
 
 function initialiseQuestions(event) {
   console.log('initialise');
