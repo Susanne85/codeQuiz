@@ -15,7 +15,7 @@ let getStudentScores;
 
 let studentTotal=0;
 let setIndex = 0;
-let timeLeft = 30;
+let timeLeft = 75;
 let timePenalty = 0;
 let waitTime;
 
@@ -39,8 +39,9 @@ function goBack(event) {
   $('#time-result').empty();
   
   setIndex = 0;
-  timeLeft = 30;
   stopTimer = false;
+  studentTotal=0;
+  timeLeft = 75;
   timePenalty = 0;
 
   clearQuestions ()
@@ -54,7 +55,6 @@ function setTime() {
 
   timeInterval = setInterval(function () {
   timeLeft = timeLeft + timePenalty;
-  console.log('set Time ' + timeLeft);
 
   if (timeLeft < 0) {
     timeLeft = 0;
@@ -66,10 +66,8 @@ function setTime() {
   timePenalty = 0;
      
   if (timeLeft <= 0 || stopTimer) {
-    console.log('waitTime' + waitTime + 'interval' + timeInterval );
     clearTimeout(waitTime);
     clearInterval(timeInterval);
-    
     stopTimer = true;
     finalScores ();
   }
@@ -99,7 +97,6 @@ function viewScores(event){
   score  = document.querySelector('.view-scores');
   console.log ('view-Scores' + score);
   if (score === null) {
-    console.log('getting scores');
     getHighScores();
     if (getStudentScores !== null) {
       ulItem = $('<ul class="view-scores" style="margin-left:55px">').text('High Scores');
@@ -116,12 +113,10 @@ function clearButton(event) {
   let clearScore;
 
   clearScore  = document.querySelector('.show-scores');
-  console.log(clearScore);
   if (clearScore !== null) {
     $('.show-scores').remove(); 
     localStorage.removeItem("studentScores");
   }
-  console.log('at end of clearing');
 }
 
 function getHighScores(event) {
@@ -178,9 +173,10 @@ function checkAnswers(event) {
       timePenalty = 0;
     }
   }
+
   pItem = $('<p>').text(answerText);
   quizListQuestions.append(pItem);
-
+  
   waitTime = setTimeout(askQuestions, 500, event);
 }
 
@@ -188,18 +184,15 @@ function askQuestions(event) {
   console.log('askQuestions'  + 'stopTimer ' + stopTimer + 'index' + setIndex);
   
   if (event != null) {
-    console.log('ask questions event is null or undefined');
   
     if (event.currentTarget.className === 'btn-start') {
       event.stopPropagation();
-      console.log('ask Questions hereA');
       event.preventDefault();
       clearQuestions();
       setTime();
     }
     else{
       setIndex = setIndex + 1;
-      console.log('ask Questions hereB1');
       clearQuestions();
     }
   }
@@ -235,7 +228,7 @@ function initialiseQuestions(event) {
   
   h1Item = $('<h1>').text('Coding Quiz Challenge');
   hrItem = $('<hr>');
-  h3Item = $('<h3>').text('Try to answerthe following code-related questions within the time limit.  Keep in mind that incorrect answers will penalize your core time by ten seconds.');
+  h3Item = $('<h3>').text('Try to answer the following code-related questions within the time limit.  Keep in mind that incorrect answers will penalize your core time by ten seconds.');
   buttonItem = $('<button class="btn-start" style="background:purple; margin-left:15px; color:white; font-size:1.5rem">Start Quiz</button>');
   
   quizListQuestions.append(h1Item, hrItem, h3Item, buttonItem);

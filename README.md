@@ -13,3 +13,7 @@ will be able to enter their initials.
 At this stage of development, user details in local storage are overwritten with each execution of the quiz.
 
 On the final page users can either elect to clear their user score by clicking on the 'Clear' button or clicking on the 'Go Back' button which will restart the quiz.
+
+In the images folder for this application shows the various screen displays.
+
+
