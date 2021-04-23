@@ -20,18 +20,18 @@ The link to the deployed application is : https://susanne85.github.io/codeQuiz/
 
 The following screen shots show the appearance of the application.
 
-![Initial page display](./images/01-start-quiz.png)
+![Initial page display](./assets/images/01-start-quiz.png)
 
-![Correct answer display](./images/02-correct-answer.png)
+![Correct answer display](./assets/images/02-correct-answer.png)
 
-![Final display](./images/03-final.png)
+![Final display](./assets/images/03-final.png)
 
-![High Scores display](./images/04-high-scores.png)
+![High Scores display](./assets/images/04-high-scores.png)
 
-![View High Scores display](./images/05-view-high-scores.png)
+![View High Scores display](./assets/images/05-view-high-scores.png)
 
-![View Clear Scores display](./images/06-clear.png)
+![View Clear Scores display](./assets/images/06-clear.png)
 
-![View Go Back display](./images/07-go-back.png)
+![View Go Back display](./assets/images/07-go-back.png)
 
 
