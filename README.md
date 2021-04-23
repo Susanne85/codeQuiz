@@ -34,8 +34,4 @@ The following screen shots show the appearance of the application.
 
 ![View Go Back display](./images/07-go-back.png)
 
-Link to deployed application
-
-https://susanne85.github.io/codeQuiz/
-
 
