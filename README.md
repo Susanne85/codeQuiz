@@ -20,17 +20,31 @@ The link to the deployed application is : https://susanne85.github.io/codeQuiz/
 
 The following screen shots show the appearance of the application.
 
+Initial page display.
+
 ![Initial page display](./assets/images/01-start-quiz.png)
+
+When the user answers a question correctly.
 
 ![Correct answer display](./assets/images/02-correct-answer.png)
 
+Final display at the end of all questions or time limit has expired.
+
 ![Final display](./assets/images/03-final.png)
+
+Viewing High Score.
 
 ![High Scores display](./assets/images/04-high-scores.png)
 
+Viewing scores in local storage.
+
 ![View High Scores display](./assets/images/05-view-high-scores.png)
 
+Clearing Scores in local storage.
+
 ![View Clear Scores display](./assets/images/06-clear.png)
+
+Going back to the start of the Quiz.
 
 ![View Go Back display](./assets/images/07-go-back.png)
 
